@@ -38,25 +38,25 @@ export const Sidebar = ({}: SidebarProps) => {
           links={[
             {
               title: "Dashboard",
-              href: "/roles/admin",
+              href: "dashboard",
               icon: LayoutDashboard,
               variant: "default",
             },
             {
               title: "Blood Donors",
-              href: "/blood-donors",
+              href: "blood-donors",
               icon: UserRound,
               variant: "ghost",
             },
             {
               title: "Blood Bank",
-              href: "/blood-bank",
+              href: "blood-bank",
               icon: HeartPulse,
               variant: "ghost",
             },
             {
               title: "Blood Request",
-              href: "/blood-request",
+              href: "blood-request",
               icon: GitPullRequest,
               variant: "ghost",
             },
