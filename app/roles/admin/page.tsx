@@ -1,6 +1,6 @@
 import { Sidebar } from "@/components/roles/sidebar";
 
-export default function AdminPage() {
+export default function AdminPageRoute() {
   return (
     <>
       <div className="min-h-screen flex w-full bg-white text-black">
