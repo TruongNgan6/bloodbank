@@ -1,8 +1,10 @@
+import { PageTitle } from "@/components/roles/page-title";
+
 export default function BloodBankPage() {
   return (
     <>
       <div>
-        <h1>Blood Bank</h1>
+        <PageTitle title={"Blood Bank"} className={""} />
       </div>
     </>
   );

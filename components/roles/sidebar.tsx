@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 
+import { useWindowWidth } from "@react-hook/window-size";
+
 interface SidebarProps {}
 
 export const Sidebar = ({}: SidebarProps) => {
@@ -20,21 +22,26 @@ export const Sidebar = ({}: SidebarProps) => {
     setIsCollapsed(!isCollapsed);
   }
 
+  const onlywidth = useWindowWidth();
+  const mobileWidth = onlywidth < 768;
+
   return (
     <>
       <div className="relative min-y-[80px] border-r px-3 pb-10 pt-24">
-        <div className="absolute right-[-20px] top-7">
-          <Button
-            onClick={toggleSidbar}
-            variant="secondary"
-            className="rounded-full p-2 "
-          >
-            <ChevronRight />
-          </Button>
-        </div>
+        {!mobileWidth && (
+          <div className="absolute right-[-20px] top-7">
+            <Button
+              onClick={toggleSidbar}
+              variant="secondary"
+              className="rounded-full p-2 "
+            >
+              <ChevronRight />
+            </Button>
+          </div>
+        )}
 
         <Nav
-          isCollapsed={isCollapsed}
+          isCollapsed={mobileWidth ? true : isCollapsed}
           links={[
             {
               title: "Dashboard",

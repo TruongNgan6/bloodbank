@@ -1,8 +1,10 @@
+import { PageTitle } from "@/components/roles/page-title";
+
 export default function DashboardPage() {
   return (
     <>
       <div>
-        <h1>Dashboard</h1>
+        <PageTitle title={"Dashboard"} className={""} />
       </div>
     </>
   );

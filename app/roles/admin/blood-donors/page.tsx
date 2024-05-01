@@ -1,8 +1,12 @@
+import { PageTitle } from "@/components/roles/page-title";
+import { TableDonors } from "@/components/roles/table-donors";
+
 export default function BloodDonorsPage() {
   return (
     <>
       <div>
-        <h1>Blood Donors</h1>
+        <PageTitle title={"Blood Donors"} className={""} />
+        <TableDonors />
       </div>
     </>
   );
