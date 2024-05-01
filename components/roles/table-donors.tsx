@@ -22,6 +22,17 @@ const invoices = [
     city: "Ho Chi Minh",
     status: "disable",
   },
+  {
+    id: "2",
+    name: "Shin",
+    date: "06-09-1999",
+    gender: "male",
+    idCard: "098883122",
+    BG: "AB+",
+    phone: "0988989889",
+    city: "Long An",
+    status: "active",
+  },
 ];
 
 export function TableDonors() {
@@ -65,12 +76,6 @@ export function TableDonors() {
           </TableRow>
         ))}
       </TableBody>
-      {/* <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter> */}
     </Table>
   );
 }
