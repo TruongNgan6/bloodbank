@@ -4,7 +4,7 @@ import { TableDonors } from "@/components/roles/table-donors";
 export default function BloodDonorsPage() {
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-5 w-full">
         <PageTitle title={"Blood Donors"} className={""} />
         <TableDonors />
       </div>

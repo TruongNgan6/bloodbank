@@ -9,6 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
+import { EditDialog } from "./edit-dialog";
+import { DeleteDialog } from "./delete-dialog";
+import { ViewDialog } from "./view-dialog";
 
 const invoices = [
   {
@@ -62,15 +65,10 @@ export function TableDonors() {
             <TableCell>{invoice.gender}</TableCell>
             <TableCell>{invoice.status}</TableCell>
             <TableCell>
-              <Button className="ml-2 bg-cyan-500 hover:bg-cyan-600">
-                View
-              </Button>
-              <Button className="ml-2 bg-amber-500 hover:bg-amber-600">
-                Edit
-              </Button>
-              <Button className="ml-2 bg-red-500 hover:bg-red-600">
-                Delete
-              </Button>
+
+              <ViewDialog />
+              <EditDialog />
+              <DeleteDialog />
             </TableCell>
             {/* <TableCell className="text-right">{invoice.totalAmount}</TableCell> */}
           </TableRow>
