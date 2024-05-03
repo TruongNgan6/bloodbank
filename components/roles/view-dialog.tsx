@@ -10,13 +10,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "../ui/textarea"
 
 export function ViewDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="ml-2 bg-cyan-500 hover:bg-cyan-600" >
-                    View
+                    Send Request
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -41,6 +42,16 @@ export function ViewDialog() {
                         <Input
                             id="phoneNo"
                             defaultValue="0987654321"
+                            className="col-span-3"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="email" className="text-right">
+                            Email
+                        </Label>
+                        <Input
+                            id="email"
+                            defaultValue="nancy@gmail.com"
                             className="col-span-3"
                         />
                     </div>
@@ -74,9 +85,11 @@ export function ViewDialog() {
                             className="col-span-3"
                         />
                     </div>
+                    <div >
+                        <Textarea placeholder="Type your message here." />
+                    </div>
                 </div>
                 <DialogFooter>
-                    <Button name="cancel" type="submit">Cancel</Button>
                     <Button name="send-request" type="submit">Send request</Button>
                 </DialogFooter>
             </DialogContent>

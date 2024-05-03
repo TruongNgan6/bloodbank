@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button"
 export function DeleteDialog() {
     return (
         <AlertDialog>
-
             <AlertDialogTrigger asChild>
                 <Button className="ml-2 bg-red-500 hover:bg-red-600">Delete</Button>
             </AlertDialogTrigger>
@@ -29,7 +28,7 @@ export function DeleteDialog() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogAction>Delete</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

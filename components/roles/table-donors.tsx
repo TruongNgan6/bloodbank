@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
+
 import { EditDialog } from "./edit-dialog";
 import { DeleteDialog } from "./delete-dialog";
 import { ViewDialog } from "./view-dialog";
@@ -17,6 +17,7 @@ const invoices = [
   {
     id: "1",
     name: "Nancy",
+    email: "nancy@gmail.com",
     date: "06-06-2000",
     gender: "female",
     idCard: "0988872123122",
@@ -28,6 +29,7 @@ const invoices = [
   {
     id: "2",
     name: "Shin",
+    email: "shin@gmail.com",
     date: "06-09-1999",
     gender: "male",
     idCard: "098883122",
@@ -46,6 +48,7 @@ export function TableDonors() {
           <TableHead className="w-[100px]">ID</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Mobile</TableHead>
+          <TableHead>Email</TableHead>
           <TableHead>City</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Gender</TableHead>
@@ -60,6 +63,7 @@ export function TableDonors() {
             <TableCell className="font-medium">{invoice.id}</TableCell>
             <TableCell>{invoice.name}</TableCell>
             <TableCell>{invoice.phone}</TableCell>
+            <TableCell>{invoice.email}</TableCell>
             <TableCell>{invoice.city}</TableCell>
             <TableCell>{invoice.BG}</TableCell>
             <TableCell>{invoice.gender}</TableCell>
@@ -67,7 +71,7 @@ export function TableDonors() {
             <TableCell>
 
               <ViewDialog />
-              <EditDialog />
+              {/* <EditDialog /> */}
               <DeleteDialog />
             </TableCell>
             {/* <TableCell className="text-right">{invoice.totalAmount}</TableCell> */}
