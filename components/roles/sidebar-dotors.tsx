@@ -2,7 +2,12 @@
 
 import { use, useState } from "react";
 import { Nav } from "../ui/nav";
-import { ChevronRight, HeartPulse, Inbox, UserRound } from "lucide-react";
+import {
+  ChevronRight,
+  HeartPulse,
+  GitPullRequest,
+  UserRound,
+} from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useWindowWidth } from "@react-hook/window-size";
@@ -47,6 +52,12 @@ export const SidebarDoctor = ({}: SidebarProps) => {
               title: "Find Donors",
               href: "find-donors",
               icon: UserRound,
+              variant: "ghost",
+            },
+            {
+              title: "Blood Request",
+              href: "blood-send-request",
+              icon: GitPullRequest,
               variant: "ghost",
             },
           ]}

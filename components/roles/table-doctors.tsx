@@ -47,7 +47,6 @@ export function TableFindDonors() {
             <TableHead>Type</TableHead>
             <TableHead>Gender</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Actions</TableHead>
             {/* <TableHead className="text-right">Amount</TableHead> */}
           </TableRow>
         </TableHeader>
@@ -61,11 +60,7 @@ export function TableFindDonors() {
               <TableCell>{invoice.BG}</TableCell>
               <TableCell>{invoice.gender}</TableCell>
               <TableCell>{invoice.status}</TableCell>
-              <TableCell>
-                <ViewDialog />
-                {/* <EditDialog /> */}
-                {/* <DeleteDialog /> */}
-              </TableCell>
+
               {/* <TableCell className="text-right">{invoice.totalAmount}</TableCell> */}
             </TableRow>
           ))}
