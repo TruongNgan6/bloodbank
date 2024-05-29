@@ -79,80 +79,49 @@ export function DoctorsRequestForm() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hospital Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your hospital name" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the name that will be displayed on your request and in
-                  emails.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>DoctorID</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your ID" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the Id that will be displayed on your request and in
-                  emails.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Mobile of Hospital</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mobile" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type of Blood</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mobile" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>How many bags?</FormLabel>
-                <FormControl>
-                  <Input placeholder="How many bags?" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FormItem>
+            <FormLabel>Hospital Name</FormLabel>
+            <FormControl>
+              <Input placeholder="Your hospital name" />
+            </FormControl>
+            <FormDescription>
+              This is the name that will be displayed on your request and in
+              emails.
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Doctor ID</FormLabel>
+            <FormControl>
+              <Input placeholder="Your ID" />
+            </FormControl>
+            <FormDescription>
+              This is the name that will be displayed on your request and in
+              emails.
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Moblie</FormLabel>
+            <FormControl>
+              <Input placeholder="Hotline of Hospital" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Type of Blood</FormLabel>
+            <FormControl>
+              <Input placeholder="Type" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+          <FormItem>
+            <FormLabel>How many Bags?</FormLabel>
+            <FormControl>
+              <Input placeholder="1 or 2 bags" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           <Button type="submit" id="send-request">
             Send Request
           </Button>
