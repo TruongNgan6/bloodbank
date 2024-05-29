@@ -8,6 +8,7 @@ export default function BadgesPage() {
         <div className="grow h-14">
           <PageTitle title={"Badges"} className={""} />
         </div>
+        <div className="grow h-14"></div>
         <div>
           <DonorsNav />
         </div>
