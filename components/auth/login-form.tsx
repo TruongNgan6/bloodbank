@@ -46,6 +46,7 @@ export const LoginForm = () => {
 
     try {
       const res: any = await postUserLogin(api, userData);
+
       if (res && res.EC === 0) {
         let data = {
           isAuthenticated: true,
