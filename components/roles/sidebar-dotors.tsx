@@ -12,9 +12,9 @@ import { Button } from "../ui/button";
 
 import { useWindowWidth } from "@react-hook/window-size";
 
-interface SidebarProps {}
+interface SidebarProps { }
 
-export const SidebarDoctor = ({}: SidebarProps) => {
+export const SidebarDoctor = ({ }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   function toggleSidbar() {
@@ -57,6 +57,12 @@ export const SidebarDoctor = ({}: SidebarProps) => {
             {
               title: "Blood Request",
               href: "blood-send-request",
+              icon: GitPullRequest,
+              variant: "ghost",
+            },
+            {
+              title: "Donation Schedule List",
+              href: "donation-schedule-list",
               icon: GitPullRequest,
               variant: "ghost",
             },

@@ -2,49 +2,83 @@
 import { CardWrapper } from "./card-wrapper";
 import { LoginSchema } from "@/schemas";
 import { useState, useTransition } from "react";
-
 import * as z from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { login } from "@/actions/login";
+import { postUserLogin } from '@/app/services/apiService';
+import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation";  // Adjust import
+
 
 export const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-  // Cap nhat uu tien giao dien
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const validateForm = () => {
+    const formData = { email, password };
+    try {
+      LoginSchema.parse(formData);
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setError(error.errors.map((err) => err.message).join(", "));
+      }
+      return false;
+    }
+  };
+
+  let router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
     setError("");
     setSuccess("");
 
-    startTransition(() => {
-      login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.suceess);
-      });
-    });
+    const api = '/api/users/login';
+    const userData = { email, password };
+
+    try {
+      const res: any = await postUserLogin(api, userData);
+
+      if (res && res.EC === 0) {
+        console.log("check", res)
+        let token = res.DT.access_token;
+        let userId = res.DT.id;
+        let hospitalId = res.DT.hospitalId;
+        let data = {
+          isAuthenticated: true,
+          token
+        }
+        localStorage.setItem("jwt", token);
+        console.log("check token", token)
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("hospitalId", hospitalId);
+        toast.success(res.EM);
+
+        const emailDomain = email.split('@')[1];
+        if (emailDomain === 'admin.com') {
+          router.push('/roles/admin/dashboard');
+        } else if (emailDomain === 'doctor.com') {
+          router.push('/roles/doctors/blood-bank');
+        } else {
+          router.push('/roles/donors/donate');
+        }
+      } else {
+        //ffffff
+        toast.error(res.EM);
+      }
+    } catch (error) {
+      setError(`An error occurred. Please try again. ${error}`);
+    }
   };
+
   return (
     <>
       <CardWrapper
@@ -53,53 +87,39 @@ export const LoginForm = () => {
         backButtonHref="/auth/register"
         showSocial
       >
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email">Email</label>
+              <Input
+                id="email"
                 name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
-                        type="email"
-                        placeholder="nancy@example.com"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              ></FormField>
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
-                        type="password"
-                        placeholder="*******"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              ></FormField>
+                type="email"
+                placeholder="nancy@example.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                disabled={isPending}
+              />
             </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
-            <Button className="w-full" type="submit">
-              Login
-            </Button>
-          </form>
-        </Form>
+            <div>
+              <label htmlFor="password">Password</label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="*******"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                disabled={isPending}
+              />
+            </div>
+          </div>
+          {error && <FormError message={error} />}
+          {success && <FormSuccess message={success} />}
+          <Button className="w-full" type="submit" disabled={isPending}>
+            {isPending ? "Submitting..." : "Login"}
+          </Button>
+        </form>
       </CardWrapper>
     </>
   );

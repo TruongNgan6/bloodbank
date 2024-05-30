@@ -1,7 +1,7 @@
 import { UserNav } from "@/components/roles/doctor-avatar";
 import { DataTableToolbar } from "@/components/roles/doctor-toolbar";
 import { PageTitle } from "@/components/roles/page-title";
-import { TableFindDonors } from "@/components/roles/table-doctors";
+import { TableFindDonors } from "@/components/roles/table-doctor-find-donor";
 
 export default function FindDonorsPage() {
   return (

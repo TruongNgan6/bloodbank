@@ -1,132 +1,98 @@
-"use client";
+"use client"
 
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { toast } from "@/components/ui/use-toast";
-import { format } from "date-fns";
-
+import { postSendBloodRequest } from '@/app/services/apiService';
+import { toast } from 'react-toastify';
 const accountFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Name must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Name must not be longer than 30 characters.",
-    }),
-  dob: z.date({
-    required_error: "A date of birth is required.",
-  }),
-  language: z.string({
-    required_error: "Please select a language.",
-  }),
+  hospitalName: z.string().min(2, { message: "Hospital name must be at least 2 characters." }),
+  mobile: z.string(),
+  typeOfBlood: z.string(),
+  bags: z.string(),
 });
 
 type AccountFormValues = z.infer<typeof accountFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-  // name: "Your name",
-  // dob: new Date("2023-01-23"),
-};
-
 export function DoctorsRequestForm() {
+  const [doctorID, setDoctorID] = useState("");
+  const [error, setError] = useState<string | undefined>();
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
-    defaultValues,
+    defaultValues: {},
   });
 
-  function onSubmit(data: AccountFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  useEffect(() => {
+    const storedDoctorID = localStorage.getItem("userId");
+    if (storedDoctorID) {
+      setDoctorID(storedDoctorID);
+    }
+  }, []);
+  console.log("check doctorID", doctorID)
+
+
+  const handleSubmit = async (data: AccountFormValues) => {
+
+    const userData = { ...data, doctorID }; // Lấy doctorID từ state và kết hợp với dữ liệu form
+
+    console.log("check data", userData);
+
+    const api = '/api/doctors/send-blood-request';
+    try {
+      const res: any = await postSendBloodRequest(api, userData);
+      if (res && res.EC === 0) {
+        toast.success(res.EM);
+      } else {
+        toast.error(res.EM);
+      }
+    } catch (error) {
+      setError(`An error occurred. Please try again. ${error}`);
+    }
+  };
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormItem>
-            <FormLabel>Hospital Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Your hospital name" />
-            </FormControl>
-            <FormDescription>
-              This is the name that will be displayed on your request and in
-              emails.
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-          <FormItem>
-            <FormLabel>Doctor ID</FormLabel>
-            <FormControl>
-              <Input placeholder="Your ID" />
-            </FormControl>
-            <FormDescription>
-              This is the name that will be displayed on your request and in
-              emails.
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-          <FormItem>
-            <FormLabel>Moblie</FormLabel>
-            <FormControl>
-              <Input placeholder="Hotline of Hospital" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-          <FormItem>
-            <FormLabel>Type of Blood</FormLabel>
-            <FormControl>
-              <Input placeholder="Type" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-          <FormItem>
-            <FormLabel>How many Bags?</FormLabel>
-            <FormControl>
-              <Input placeholder="1 or 2 bags" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-          <Button type="submit" id="send-request">
-            Send Request
-          </Button>
-        </form>
-      </Form>
-    </>
+    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <div>
+        <label htmlFor="hospitalName">Hospital Name</label>
+        <Input
+          id="hospitalName"
+          placeholder="Your hospital name"
+          {...form.register("hospitalName")} // Thêm đoạn này để liên kết với hook form
+        />
+        {form.formState.errors.hospitalName && (
+          <span className="text-red-600">{form.formState.errors.hospitalName.message}</span>
+        )}
+      </div>
+      <div>
+        <label htmlFor="mobile">Mobile</label>
+        <Input
+          id="mobile"
+          placeholder="Hotline of Hospital"
+          {...form.register("mobile")} // Thêm đoạn này để liên kết với hook form
+        />
+      </div>
+      <div>
+        <label htmlFor="typeOfBlood">Type of Blood</label>
+        <Input
+          id="typeOfBlood"
+          placeholder="Type"
+          {...form.register("typeOfBlood")} // Thêm đoạn này để liên kết với hook form
+        />
+      </div>
+      <div>
+        <label htmlFor="bags">How many Bags?</label>
+        <Input
+          id="bags"
+          placeholder="1 or 2 bags"
+          {...form.register("bags")} // Thêm đoạn này để liên kết với hook form
+        />
+      </div>
+      <Button type="submit" id="send-request">
+        Send Request
+      </Button>
+    </form>
   );
 }

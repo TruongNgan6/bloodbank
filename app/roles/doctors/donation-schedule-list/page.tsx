@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/roles/page-title";
-import { TableBlood } from "@/components/roles/table-blood";
-export default function BloodBankPage() {
+import { TableDonationSchedule } from "@/components/roles/table-donation-schedule";
+export default function DonationScheduleList() {
     return (
         <>
             {/* <div>
@@ -8,8 +8,8 @@ export default function BloodBankPage() {
             </div> */}
 
             <div className="flex flex-col gap-5 w-full">
-                <PageTitle title={"Blood Bank"} className={""} />
-                <TableBlood />
+                <PageTitle title={"Donation Schedule List"} className={""} />
+                <TableDonationSchedule />
             </div>
         </>
     );

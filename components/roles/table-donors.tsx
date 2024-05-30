@@ -1,82 +1,109 @@
+"use client"
+
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 
-import { EditDialog } from "./edit-dialog";
-import { DeleteDialog } from "./delete-dialog";
 import { ViewDialog } from "./view-dialog";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { getAllDonorInfor, postRequestBloodFromAdmin } from '@/app/services/apiService';
 
-const invoices = [
-  {
-    id: "1",
-    name: "Nancy",
-    email: "nancy@gmail.com",
-    date: "06-06-2000",
-    gender: "female",
-    idCard: "0988872123122",
-    BG: "B+",
-    phone: "0987654321",
-    city: "Ho Chi Minh",
-    status: "disable",
-  },
-  {
-    id: "2",
-    name: "Shin",
-    email: "shin@gmail.com",
-    date: "06-09-1999",
-    gender: "male",
-    idCard: "098883122",
-    BG: "AB+",
-    phone: "0988989889",
-    city: "Long An",
-    status: "active",
-  },
-];
+interface Donor {
+  id: string;
+  fullname: string;
+  email: string;
+  gender: string;
+  typeOfBlood: string;
+  mobile: string;
+  city: string;
+}
 
 export function TableDonors() {
+  const [listDonorInfor, setListDonorInfor] = useState<Donor[]>([]);
+
+  useEffect(() => {
+    fetchListDonorInfor();
+  }, []);
+
+  const fetchListDonorInfor = async () => {
+    const api = '/api/admin/get-donor-infor';
+    try {
+      const res: any = await getAllDonorInfor(api);
+      if (res && res.EC === 0) {
+        setListDonorInfor(res.DT);
+      }
+    } catch (error) {
+      console.error('Error fetching request list:', error);
+      toast.error('An error occurred while fetching request list.');
+    }
+  }
+
+  const saveRequestData = async (requestData: Donor & { message: string }) => {
+    console.log('requestData', requestData);
+    const api = '/api/request-blood-from-admin';
+
+    try {
+      // const res = await axios.post(api, requestData, {
+      //     headers: {
+      //         Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      //     }
+      // });
+      const res: any = await postRequestBloodFromAdmin(api, requestData);
+      if (res && res.EC === 0) {
+        toast.success(res.EM);
+      } else {
+        toast.error(res.EM);
+      }
+    } catch (error) {
+      console.error('Error saving request data:', error);
+      toast.error('An error occurred while saving request data.');
+    }
+  }
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
-          <TableHead>Name</TableHead>
+          <TableHead>Fullname</TableHead>
           <TableHead>Mobile</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>City</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Gender</TableHead>
-          <TableHead>Status</TableHead>
           <TableHead>Actions</TableHead>
-          {/* <TableHead className="text-right">Amount</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.id}>
-            <TableCell className="font-medium">{invoice.id}</TableCell>
-            <TableCell>{invoice.name}</TableCell>
-            <TableCell>{invoice.phone}</TableCell>
-            <TableCell>{invoice.email}</TableCell>
-            <TableCell>{invoice.city}</TableCell>
-            <TableCell>{invoice.BG}</TableCell>
-            <TableCell>{invoice.gender}</TableCell>
-            <TableCell>{invoice.status}</TableCell>
+        {listDonorInfor && listDonorInfor.length > 0 && listDonorInfor.map((item, index) => (
+          <TableRow key={index}>
+            <TableCell className="font-medium">{item.id}</TableCell>
+            <TableCell>{item.fullname}</TableCell>
+            <TableCell>{item.mobile}</TableCell>
+            <TableCell>{item.email}</TableCell>
+            <TableCell>{item.city}</TableCell>
+            <TableCell>{item.typeOfBlood}</TableCell>
+            <TableCell>{item.gender}</TableCell>
             <TableCell>
-
-              <ViewDialog />
-              {/* <EditDialog /> */}
-              <DeleteDialog />
+              <ViewDialog donor={item} onSendRequest={(message: string) => {
+                // Handle sending request
+                const requestData = {
+                  ...item,
+                  message
+                };
+                // Gọi API để lưu dữ liệu vào database
+                saveRequestData(requestData);
+              }} />
             </TableCell>
-            {/* <TableCell className="text-right">{invoice.totalAmount}</TableCell> */}
           </TableRow>
         ))}
+        {listDonorInfor && listDonorInfor.length === 0 && <TableCell>Not found data</TableCell>}
       </TableBody>
     </Table>
   );
