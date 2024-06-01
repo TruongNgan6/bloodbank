@@ -76,7 +76,7 @@ export function DonateDialog() {
   return (
     <Dialog >
       <DialogTrigger asChild>
-        <Button className="ml-2 bg-cyan-500 hover:bg-cyan-600">
+        <Button className="ml-2 bg-red-500 hover:bg-red-600">
           Book Donation
         </Button>
       </DialogTrigger>
@@ -111,7 +111,7 @@ export function DonateDialog() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="hospital" className="text-right">
-              Choose a hospital
+              Hospital
             </Label>
             <select id="hospital" value={selectedHospitalId} onChange={handleHospitalChange} className="col-span-3 border rounded px-2 py-1">
               {hospitals.map((hospital) => (
@@ -144,7 +144,7 @@ export function DonateDialog() {
           </div>
         </div>
         <DialogFooter>
-          <Button name="send-request" type="submit" onClick={handleSubmit}>
+          <Button name="send-request" type="submit" onClick={handleSubmit} className='bg-red-500 hover:bg-red-600'>
             Send request
           </Button>
         </DialogFooter>

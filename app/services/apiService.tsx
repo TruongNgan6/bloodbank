@@ -112,7 +112,41 @@ const getAllDonorByHospitalId = async (url: string) => {
 
 }
 
+const getNotificationByDonorId = async (url: string) => {
+    // Get token from localStorage
+    let token = localStorage.getItem("jwt");
 
+    // console.log("check token bbbb", token)
+    // Set Authorization header with token
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+
+    };
+
+    // Send request with axios and config
+    return instance.get(url, config);
+
+}
+
+const getAllHistoryDonationByDonorId = async (url: string) => {
+    // Get token from localStorage
+    let token = localStorage.getItem("jwt");
+
+    // console.log("check token bbbb", token)
+    // Set Authorization header with token
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+
+    };
+
+    // Send request with axios and config
+    return instance.get(url, config);
+
+}
 const postCreateDonorInfor = async (url: string, userData: any) => {
     // Get token from localStorage
     let token = localStorage.getItem("jwt");
@@ -177,5 +211,5 @@ export {
     postCreateNewProfileUser, postCreateNewUser, postUserLogin, postSendBloodRequest,
     getAllRequest, getAllBloodBank, postCreateBookDonation, getAllDonationScheduleByHopitalId,
     postCreateDonorInfor, getAllDonorInfor, getAllDonorByHospitalId, deteleteRequest,
-    postRequestBloodFromAdmin
+    postRequestBloodFromAdmin, getNotificationByDonorId, getAllHistoryDonationByDonorId
 }

@@ -2,14 +2,14 @@
 
 import { use, useState } from "react";
 import { Nav } from "../ui/nav";
-import { Badge, ChevronRight, Inbox, UserRound } from "lucide-react";
+import { Badge, ChevronRight, Inbox, UserRound, BellRing } from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useWindowWidth } from "@react-hook/window-size";
 
-interface SidebarProps {}
+interface SidebarProps { }
 
-export const SidebarDonors = ({}: SidebarProps) => {
+export const SidebarDonors = ({ }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   function toggleSidbar() {
@@ -53,6 +53,12 @@ export const SidebarDonors = ({}: SidebarProps) => {
               title: "Badges",
               href: "badges",
               icon: Badge,
+              variant: "ghost",
+            },
+            {
+              title: "Notification",
+              href: "notification",
+              icon: BellRing,
               variant: "ghost",
             },
           ]}

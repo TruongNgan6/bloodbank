@@ -16,6 +16,7 @@ import { getAllDonorInfor, postRequestBloodFromAdmin } from '@/app/services/apiS
 
 interface Donor {
   id: string;
+  userId: string;
   fullname: string;
   email: string;
   gender: string;
@@ -45,6 +46,8 @@ export function TableDonors() {
   }
 
   const saveRequestData = async (requestData: Donor & { message: string }) => {
+
+
     console.log('requestData', requestData);
     const api = '/api/request-blood-from-admin';
 
@@ -71,6 +74,7 @@ export function TableDonors() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
+          <TableHead>User Id</TableHead>
           <TableHead>Fullname</TableHead>
           <TableHead>Mobile</TableHead>
           <TableHead>Email</TableHead>
@@ -83,7 +87,8 @@ export function TableDonors() {
       <TableBody>
         {listDonorInfor && listDonorInfor.length > 0 && listDonorInfor.map((item, index) => (
           <TableRow key={index}>
-            <TableCell className="font-medium">{item.id}</TableCell>
+            <TableCell className="font-medium">{index + 1}</TableCell>
+            <TableCell>{item.userId}</TableCell>
             <TableCell>{item.fullname}</TableCell>
             <TableCell>{item.mobile}</TableCell>
             <TableCell>{item.email}</TableCell>

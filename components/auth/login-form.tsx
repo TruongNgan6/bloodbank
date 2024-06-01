@@ -52,6 +52,7 @@ export const LoginForm = () => {
         let token = res.DT.access_token;
         let userId = res.DT.id;
         let hospitalId = res.DT.hospitalId;
+        let username = res.DT.username;
         let data = {
           isAuthenticated: true,
           token
@@ -60,6 +61,7 @@ export const LoginForm = () => {
         console.log("check token", token)
         localStorage.setItem("userId", userId);
         localStorage.setItem("hospitalId", hospitalId);
+
         toast.success(res.EM);
 
         const emailDomain = email.split('@')[1];

@@ -60,7 +60,7 @@ export function TableBlood() {
                     <TableHead>Type</TableHead>
                     <TableHead>Quanlity</TableHead>
                     <TableHead>Expiration Date</TableHead>
-                    <TableHead>Actions</TableHead>
+                    {/* <TableHead>Actions</TableHead> */}
                     {/* <TableHead className="text-right">Amount</TableHead> */}
                 </TableRow>
             </TableHeader>

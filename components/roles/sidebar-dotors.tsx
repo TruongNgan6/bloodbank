@@ -7,6 +7,7 @@ import {
   HeartPulse,
   GitPullRequest,
   UserRound,
+  CalendarClock
 } from "lucide-react";
 import { Button } from "../ui/button";
 
@@ -63,7 +64,7 @@ export const SidebarDoctor = ({ }: SidebarProps) => {
             {
               title: "Donation Schedule List",
               href: "donation-schedule-list",
-              icon: GitPullRequest,
+              icon: CalendarClock,
               variant: "ghost",
             },
           ]}

@@ -34,7 +34,7 @@ const cardData: CardInfoProps[] = [
 export default function DonatePage() {
   return (
     <>
-      <div className="flex">
+      <div className="flex animate-fadeIn">
         <div className="grow h-14">
           <PageTitle title={"Donate"} className={""} />
           <section
